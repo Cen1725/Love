@@ -156,7 +156,7 @@
 
         var moveAnimate = eval(Jscex.compile("async", function () {
             tree.snapshot("p1", 240, 0, 610, 680);
-            while (tree.move("p1", 500, 0)) {
+            while (tree.move("p1", 0, 0)) {
                 foot.draw();
                 $await(Jscex.Async.sleep(10));
             }
