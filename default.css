@@ -12,7 +12,7 @@ top:20px;position:absolute;
 #clock-box a {font-size:28px;text-decoration:none;}
 #clock{margin-left:48px;}
 #clock .digit {font-size:64px;}
-#canvas{margin:0 auto;width:1200px;height:1200px;}
+#canvas{margin:0 auto;width:200px;height:1200px;}
 #error{margin:0 auto;text-align:center;margin-top:60px;display:none;}
 .hand{cursor:pointer;}
 .say{margin-left:5px;}
