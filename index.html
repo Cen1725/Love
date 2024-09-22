@@ -1,17 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>给你的一封信</title>	    
-        <link type="text/css" rel="stylesheet" href="./default.css">
-		<script type="text/javascript" src="./jquery.min.js"></script>
-		<script type="text/javascript" src="./jscex.min.js"></script>
-		<script type="text/javascript" src="./jscex-parser.js"></script>
-		<script type="text/javascript" src="./jscex-jit.js"></script>
-		<script type="text/javascript" src="./jscex-builderbase.min.js"></script>
-		<script type="text/javascript" src="./jscex-async.min.js"></script>
-		<script type="text/javascript" src="./jscex-async-powerpack.min.js"></script>
-		<script type="text/javascript" src="./functions.js" charset="utf-8"></script>
-		<script type="text/javascript" src="./love.js" charset="utf-8"></script>
-    <style type="text/css">
+        <link type="text/css" rel="stylesheet" href="./file/default.css">
+		<script type="text/javascript" src="./file/jquery.min.js"></script>
+		<script type="text/javascript" src="./file/jscex.min.js"></script>
+		<script type="text/javascript" src="./file/jscex-parser.js"></script>
+		<script type="text/javascript" src="./file/jscex-jit.js"></script>
+		<script type="text/javascript" src="./file/jscex-builderbase.min.js"></script>
+		<script type="text/javascript" src="./file/jscex-async.min.js"></script>
+		<script type="text/javascript" src="./file/jscex-async-powerpack.min.js"></script>
+		<script type="text/javascript" src="./file/functions.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./file/love.js" charset="utf-8"></script>
+	    <style type="text/css">
         </style>
 </head>
     <body>
@@ -23,7 +23,7 @@
             </audio>
             <div id="wrap">
                 <div id="text">
-                    <div id="code1"> <font color="#FF0000"> <span class="say">亲爱的宝宝，我爱你</span><br>
+                    <div id="code"> <font color="#FF0000"> <span class="say">亲爱的宝宝，我爱你</span><br>
                       <span class="say"> 我知道我不会甜言蜜语，</span><br>
                       <span class="say"> 但是我会用行动证明一切</span><br>
                       <span class="say">你说我啰嗦，</span><br>             
@@ -53,8 +53,8 @@
     
     <script>
     </script>
+
     <script>
-            
     (function(){
         var canvas = $('#canvas');
 		
@@ -73,11 +73,10 @@
                 scale: 2
             },
             branch: [
-		    [535, 680, 570, 250, 500, 200, 30, 100, [
+                [535, 680, 570, 250, 500, 200, 30, 100, [
                     [540, 500, 455, 417, 340, 400, 13, 100, [
                         [450, 435, 434, 430, 394, 395, 2, 40]
                     ]],
-                
                     [550, 445, 600, 356, 680, 345, 12, 100, [
                         [578, 400, 648, 409, 661, 426, 3, 80]
                     ]],
@@ -131,4 +130,83 @@
                 $await(Jscex.Async.sleep(10));
             }
             while (seed.canScale()) {
-  
+                seed.scale(0.95);
+                $await(Jscex.Async.sleep(10));
+            }
+            while (seed.canMove()) {
+                seed.move(0, 2);
+                foot.draw();
+                $await(Jscex.Async.sleep(10));
+            }
+        }));
+
+        var growAnimate = eval(Jscex.compile("async", function () {
+            do {
+    	        tree.grow();
+                $await(Jscex.Async.sleep(10));
+            } while (tree.canGrow());
+        }));
+
+        var flowAnimate = eval(Jscex.compile("async", function () {
+            do {
+    	        tree.flower(2);
+                $await(Jscex.Async.sleep(10));
+            } while (tree.canFlower());
+        }));
+
+        var moveAnimate = eval(Jscex.compile("async", function () {
+            tree.snapshot("p1", 240, 0, 610, 680);
+            while (tree.move("p1", 500, 0)) {
+                foot.draw();
+                $await(Jscex.Async.sleep(10));
+            }
+            foot.draw();
+            tree.snapshot("p2", 500, 0, 610, 680);
+
+            // 会有闪烁不得意这样做, (＞﹏＜)
+            canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
+            canvas.css("background", "#ffe");
+            $await(Jscex.Async.sleep(300));
+            canvas.css("background", "none");
+        }));
+
+        var jumpAnimate = eval(Jscex.compile("async", function () {
+            var ctx = tree.ctx;
+            while (true) {
+                tree.ctx.clearRect(0, 0, width, height);
+                tree.jump();
+                foot.draw();
+                $await(Jscex.Async.sleep(25));
+            }
+        }));
+
+        var textAnimate = eval(Jscex.compile("async", function () {
+		    var together = new Date();
+		    together.setFullYear(2010,1 , 15); 			//时间年月日
+		    together.setHours(16);						//小时	
+		    together.setMinutes(53);					//分钟
+		    together.setSeconds(0);					//秒前一位
+		    together.setMilliseconds(2);				//秒第二位
+
+		    $("#code").show().typewriter();
+            $("#clock-box").fadeIn(500);
+            while (true) {
+                timeElapse(together);
+                $await(Jscex.Async.sleep(1000));
+            }
+        }));
+
+        var runAsync = eval(Jscex.compile("async", function () {
+            $await(seedAnimate());
+            $await(growAnimate());
+            $await(flowAnimate());
+            $await(moveAnimate());
+
+            textAnimate().start();
+
+            $await(jumpAnimate());
+        }));
+
+        runAsync().start();
+    })();
+    </script></body></html>
