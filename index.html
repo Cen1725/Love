@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>给你的一封信</title>	    
         <link type="text/css" rel="stylesheet" href="./default.css">
@@ -28,9 +28,9 @@
                 <div id="clock-box1">
                     <span class="STYLE1"></span><font color="#33CC00">亲爱的，我喜欢你</font>
 <span class="STYLE1">已经是……</span>
-                  <div id="clock1"></div>
+                  <div id="clock"></div>
               </div>
-                
+                <canvas id="canvas" width="1100" height="680"></canvas>
             </div>
             
         </div>
@@ -146,77 +146,4 @@
                 $await(Jscex.Async.sleep(10));
             }
             while (seed.canScale()) {
-                seed.scale(0.95);
-                $await(Jscex.Async.sleep(10));
-            }
-            while (seed.canMove()) {
-                seed.move(0, 2);
-                foot.draw();
-                $await(Jscex.Async.sleep(10));
-            }
-        }));
-
-        var growAnimate = eval(Jscex.compile("async", function () {
-            do {
-    	        tree.grow();
-                $await(Jscex.Async.sleep(10));
-            } while (tree.canGrow());
-        }));
-
-        var flowAnimate = eval(Jscex.compile("async", function () {
-            do {
-    	        tree.flower(2);
-                $await(Jscex.Async.sleep(10));
-            } while (tree.canFlower());
-        }));
-
-        
-var moveAnimate = eval(Jscex.compile("async", function () {
-            
-            // 会有闪烁不得意这样做, (＞﹏＜)
-            canvas.parent().css("background", "url(" + tree.toDataURL('image/png') + ")");
-            canvas.css("background", "#ffe");
-            $await(Jscex.Async.sleep(300));
-            canvas.css("background", "none");
-        }));
-	    
-        var jumpAnimate = eval(Jscex.compile("async", function () {
-            var ctx = tree.ctx;
-            while (true) {
-                tree.ctx.clearRect(0, 0, width, height);
-                tree.jump();
-                foot.draw();
-                $await(Jscex.Async.sleep(25));
-            }
-        }));
-
-        var textAnimate = eval(Jscex.compile("async", function () {
-		    var together = new Date();
-		    together.setFullYear(2010,1 , 15); 			//时间年月日
-		    together.setHours(16);						//小时	
-		    together.setMinutes(53);					//分钟
-		    together.setSeconds(0);					//秒前一位
-		    together.setMilliseconds(2);				//秒第二位
-
-		    $("#code").show().typewriter();
-            $("#clock-box").fadeIn(500);
-            while (true) {
-                timeElapse(together);
-                $await(Jscex.Async.sleep(1000));
-            }
-        }));
-
-        var runAsync = eval(Jscex.compile("async", function () {
-            $await(seedAnimate());
-            $await(growAnimate());
-            $await(flowAnimate());
-            $await(moveAnimate());
-
-            textAnimate().start();
-
-            $await(jumpAnimate());
-        }));
-
-        runAsync().start();
-    })();
-    </script></body></html>
+  
